@@ -32,6 +32,8 @@ Vue.filter("dateFormat",function(datestr,pattern="YYYY-MM-DD"){
 });
 //6.设置全局ajax访问基础路径
 Vue.http.options.root = "http://127.0.0.1:3000";
+//7.设置全局ajax post 访问格式
+Vue.http.options.emulateJSON = true;
 
 new Vue({
   el: '#app',

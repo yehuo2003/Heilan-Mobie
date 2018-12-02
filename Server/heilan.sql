@@ -197,33 +197,77 @@ CREATE TABLE heilan_cate(
   id INT PRIMARY KEY AUTO_INCREMENT,	#商品列表id
   title   VARCHAR(255),								#标题
   content VARCHAR(2000),							#内容
-  click   INT,												#访问量
+  sales   INT,												#销量
   img_url VARCHAR(255),								#图片路径
   price   DECIMAL(10,2),							#价格
   ctime   DATETIME										#时间
 );
 INSERT INTO heilan_cate VALUES
-(null,'牛津纺水洗休闲衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate1.jpg',98.00,now()),
-(null,'几何纹长袖','123',0,'http://127.0.0.1:3000/img/cate/cate2.jpg',168.00,now()),
-(null,'长袖衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate3.jpg',298.00,now()),
-(null,'条纹衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate4.jpg',298.00,now()),
-(null,'提花长袖','123',0,'http://127.0.0.1:3000/img/cate/cate5.jpg',328.00,now()),
-(null,'清新休闲衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate6.jpg',98.00,now()),
-(null,'保暖衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate7.jpg',328.00,now()),
-(null,'几何纹长袖','123',0,'http://127.0.0.1:3000/img/cate/cate8.jpg',98.00,now()),
-(null,'牛津纺水洗休闲衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate1.jpg',98.00,now()),
-(null,'牛仔保暖衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate2.jpg',328.00,now()),
-(null,'长袖衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate3.jpg',298.00,now()),
-(null,'条纹衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate4.jpg',298.00,now()),
-(null,'提花长袖','123',0,'http://127.0.0.1:3000/img/cate/cate5.jpg',328.00,now()),
-(null,'清新休闲衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate6.jpg',98.00,now()),
-(null,'保暖衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate7.jpg',328.00,now()),
-(null,'几何纹长袖','123',0,'http://127.0.0.1:3000/img/cate/cate8.jpg',98.00,now()),
-(null,'牛津纺水洗休闲衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate1.jpg',98.00,now()),
-(null,'牛仔保暖衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate2.jpg',328.00,now()),
-(null,'长袖衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate3.jpg',298.00,now()),
-(null,'条纹衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate4.jpg',298.00,now()),
-(null,'提花长袖','123',0,'http://127.0.0.1:3000/img/cate/cate5.jpg',328.00,now()),
-(null,'清新休闲衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate6.jpg',98.00,now()),
-(null,'保暖衬衫','123',0,'http://127.0.0.1:3000/img/cate/cate7.jpg',328.00,now()),
-(null,'几何纹长袖','123',0,'http://127.0.0.1:3000/img/cate/cate8.jpg',98.00,now());
+(null,'海澜之家2018火热新品男潮流特卖时尚牛津纺水洗休闲衬衫','123',685,'http://127.0.0.1:3000/img/cate/cate1.jpg',98.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚几何纹长袖','123',155,'http://127.0.0.1:3000/img/cate/cate2.jpg',168.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚长袖衬衫','123',542,'http://127.0.0.1:3000/img/cate/cate3.jpg',298.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚条纹衬衫','123',786,'http://127.0.0.1:3000/img/cate/cate4.jpg',298.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚提花长袖','123',254,'http://127.0.0.1:3000/img/cate/cate5.jpg',328.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚清新休闲衬衫','123',138,'http://127.0.0.1:3000/img/cate/cate6.jpg',98.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚保暖衬衫','123',854,'http://127.0.0.1:3000/img/cate/cate7.jpg',328.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚几何纹长袖','123',268,'http://127.0.0.1:3000/img/cate/cate8.jpg',98.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚牛津纺水洗休闲衬衫','123',333,'http://127.0.0.1:3000/img/cate/cate1.jpg',98.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚牛仔保暖衬衫','123',486,'http://127.0.0.1:3000/img/cate/cate2.jpg',328.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚长袖衬衫','123',847,'http://127.0.0.1:3000/img/cate/cate3.jpg',298.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚条纹衬衫','123',568,'http://127.0.0.1:3000/img/cate/cate4.jpg',298.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚提花长袖','123',516,'http://127.0.0.1:3000/img/cate/cate5.jpg',328.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚清新休闲衬衫','123',85,'http://127.0.0.1:3000/img/cate/cate6.jpg',98.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚保暖衬衫','123',169,'http://127.0.0.1:3000/img/cate/cate7.jpg',328.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚几何纹长袖','123',563,'http://127.0.0.1:3000/img/cate/cate8.jpg',98.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚牛津纺水洗休闲衬衫','123',378,'http://127.0.0.1:3000/img/cate/cate1.jpg',98.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚牛仔保暖衬衫','123',865,'http://127.0.0.1:3000/img/cate/cate2.jpg',328.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚长袖衬衫','123',865,'http://127.0.0.1:3000/img/cate/cate3.jpg',298.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚条纹衬衫','123',269,'http://127.0.0.1:3000/img/cate/cate4.jpg',298.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚提花长袖','123',475,'http://127.0.0.1:3000/img/cate/cate5.jpg',328.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚清新休闲衬衫','123',567,'http://127.0.0.1:3000/img/cate/cate6.jpg',98.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚保暖衬衫','123',367,'http://127.0.0.1:3000/img/cate/cate7.jpg',328.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚几何纹长袖','123',485,'http://127.0.0.1:3000/img/cate/cate8.jpg',98.00,now());
+
+#创建评论信息表
+CREATE TABLE heilan_comment(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+	nid INT,	#评论楼层
+	ctime DATETIME,	#时间
+	content VARCHAR(50),	#评论内容
+	username VARCHAR(25),	#用户名
+	isdel	INT	
+);
+#插入数据
+INSERT INTO heilan_comment VALUES
+(null,1,now(),'11121','tom',0),
+(null,1,now(),'11212','tom',0),
+(null,1,now(),'11113','tom',0),
+(null,1,now(),'11114','tom',0),
+(null,1,now(),'11115','tom',0),
+(null,1,now(),'11116','tom',0),
+(null,1,now(),'11117','tom',0),
+(null,1,now(),'11118','tom',0),
+(null,1,now(),'11119','tom',0),
+(null,1,now(),'11110','tom',0),
+
+(null,2,now(),'111219','tom',0),
+(null,2,now(),'112128','tom',0),
+(null,2,now(),'111137','tom',0),
+(null,2,now(),'111146','tom',0),
+(null,2,now(),'11115','tom',0),
+(null,2,now(),'111164','tom',0),
+(null,2,now(),'111173','tom',0),
+(null,2,now(),'111185','tom',0),
+(null,2,now(),'111192','tom',0),
+(null,2,now(),'111101','tom',0),
+
+(null,3,now(),'1112191','tom',0),
+(null,3,now(),'1121282','tom',0),
+(null,3,now(),'1111373','tom',0),
+(null,3,now(),'1111464','tom',0),
+(null,3,now(),'1111555','tom',0),
+(null,3,now(),'1111646','tom',0),
+(null,3,now(),'1111737','tom',0),
+(null,3,now(),'1111858','tom',0),
+(null,3,now(),'1111929','tom',0),
+(null,3,now(),'1111010','tom',0);
