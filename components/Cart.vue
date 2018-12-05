@@ -1,7 +1,12 @@
 <template>
   <div class="app_cart">
     <div class="mui-card">
-      <div class="mui-card-header">购物车</div>
+      <div class="mui-card-header">
+        <router-link to="/home">
+        <img src="../../img/left.png" alt="">
+      </router-link>
+      <span>购物车</span>
+      </div>
       <div class="mui-card-content">
 
         <div class="mui-card-content-inner" v-for="item of list" :key="item.id">
@@ -68,6 +73,8 @@ export default {
 }
 </script>
 <style>
-
+  .mui-card-header span{
+    margin: 0 auto;
+  }
 </style>
 

@@ -1,67 +1,71 @@
 <template>
   <div class="app_goods">
+    <div class="mui-card-header">
+      <router-link to="/home">
+        <img src="../../img/left.png" alt="">
+      </router-link>
+      <span>商品详情</span>
+    </div>
  <!-- 第一部分：商品的轮播区域 -->
     <div class="mui-card">
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
 					<swipe-box :list="imagelist"></swipe-box>	
-					</div>
+				</div>
     </div>
   </div>
  <!-- 第二部分：商品的购买区域 -->
  <div class="mui-card">
-				<div class="mui-card-header">{{info.title}}</div>
+				<div class="mui-card-header">{{goodinfo.title}}</div>
 				<div class="mui-card-content">
 					<div class="mui-card-content-inner">
-						<p class="price">
-              市场价：<del>￥{{info.p_old}}</del>
-              销售价：<span class="now_price">
-                ￥{{info.p_now}}
-              </span>
-            </p>
+                <p class="subtitle">
+      <span>时间：{{goodinfo.ctime | dateFormat}}</span>
+      <span>点击：{{goodinfo.sales}} 次</span>
+    </p>
+						<div class="price">
+              市场价：<del>￥{{(goodinfo.price*1.1).toFixed(2)}}</del>
+              <p class="now_price">销售价：￥{{goodinfo.price}}</p>
+            </div>
             <p>
-              购买数量：            
+              购买数量：</p>            
               <div class="mui-numbox">
                 <button class="mui-btn mui-btn-numbox-minus" type="button" @click="goSub">-</button>
                 <input class="mui-input-numbox" type="number" value="1" v-model="num"/>
                 <button class="mui-btn mui-btn-numbox-plus" type="button" @click="goAdd">+</button>
               </div> 
-                </p>     
+                     
 					</div>
 				</div>
+        
     <div class="mui-card-footer">
+      商品 详情 评论
+    </div>
+    </div>
       <p>
         <mt-button type="primary" size="small">立即购买</mt-button>
-        <mt-button type="danger" size="small">加入购物车</mt-button>
+        <mt-button type="danger" size="small" @click="addCart">加入购物车</mt-button>
       </p>
-    </div>
-  </div>
  <!-- 第三部分：商品的参数区域 -->
-  <div class="mui-card">  
-				<div class="mui-card-header">商品参数</div>
-				<div class="mui-card-content">
-					<div class="mui-card-content-inner">
-						<p>商品货号：{{info.p_sn}}</p>
-						<p>商品类型：{{info.p_type}}</p>
-						<p>商品类型：{{info.p_type}}</p>
-					</div>
-      </div>
-  <div class="mui-card-footer">
-      按钮 图文介绍 商品评论
+    <div class="mui-card">  
+          <div class="mui-card-header">商品参数</div>
+          <div class="mui-card-content">
+            <div class="mui-card-content-inner">
+              <p>商品货号：HLA54H4R{{goodinfo.price}}KBY{{goodinfo.id}}</p>
+              <p>商品类型：{{goodinfo.title.slice(-2)}}</p>
+              <p>商品材质：{{goodinfo.title.slice(-4,-2)}}</p>
+            </div>
+        </div>
+    <div class="mui-card-footer">
+        按钮 图文介绍 商品评论
     </div>
   </div>
-  <!-- 商品列表 -->
-
-  <!-- 模拟 -->
-    <h1 class="title">{{goodinfo.title}}</h1>
-    <p class="subtitle">
-      <span>时间：{{goodinfo.ctime | dateFormat}}</span>
-      <span>点击：{{goodinfo.sales}} 次</span>
-    </p>
+  <!-- 商品内容 -->
+    <h4 class="title">{{goodinfo.title}}</h4>
+ <!-- -->
     <div class="container" v-html="goodinfo.content">
     </div>
   <!-- 评论区域 -->
-
   <comment-box :id="this.id"></comment-box>
   </div>  
 </template>  
@@ -78,12 +82,17 @@ export default {
     return {
       id:this.$route.params.id,
       imagelist:[],
-      goodinfo:{},
+      goodinfo:{title:''},
       info:{}, //保存商品详细信息
       num:1
     }
   },
   methods:{
+    addCart(){
+        //1.获取参数 pid count uid
+        //2.发送请求
+        //3.如果成功提示
+    },
     goSub(){
       if(this.num<=1){return this.num=0}
       this.num = parseInt(this.num) -1
@@ -98,9 +107,9 @@ export default {
       this.$http.get("discount/find").then(result=>{
         //保存info对象中
         this.info = result.body;
-        console.log(this.info)
       })    
     },
+    //轮播图
     getImgList(){
       this.$http.get("imagelist/list").then(result=>{
         if(result.body.code == 1){
@@ -131,6 +140,9 @@ export default {
 
 </script>
 <style>
+  .app_goods .mui-card-header span{
+      margin: 0 auto;
+  }
   .app_goods>ul>li{
     list-style: none;    
   }
@@ -149,6 +161,9 @@ export default {
     padding: 0 30px;
     display: flex;
     justify-content: space-between;
+  }
+  .app_goods .container img{
+    width: 100%;
   }
 </style>
 

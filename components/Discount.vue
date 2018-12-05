@@ -1,17 +1,25 @@
 <template>
-  <div class="app_discount">
+ <div>
+   <!-- 顶部返回 -->
+    <div class="mui-card-header">
+      <router-link to="/home">
+        <img src="../../img/left.png" alt="">
+      </router-link>
+      <span>秒杀</span>
+    </div>
+  <div class="app_discount">    
     <!-- 秒杀列表 -->
     <div class="app_discount-item" v-for="item of list" :key="item.id" @click="getDetail(item.id)">
       <img :src="item.img_url" />
       <h1 class="title">{{item.title}}</h1>
       <div class="info">
         <p class="price">
-          <span class="old">￥{{item.p_old}}</span>
-          <span class="now">￥{{item.p_now}}</span>
+          <span class="old">￥{{(item.price*1.5).toFixed(2)}}</span>
+          <span class="now">￥{{item.price}}</span>          
         </p>
         <p class="sell">
           <span>热卖中</span>
-          <span>还剩{{item.sell}}件</span>
+          <span>还剩{{item.stock}}件</span>
         </p>
       </div>
     </div>
@@ -19,6 +27,7 @@
     <!-- 按钮 -->
     <mt-button type="primary" size="large">加载更多</mt-button>
   </div>
+ </div>
 </template>
 <script>
   export default {
@@ -44,6 +53,10 @@
   //点击当前商品跳转，商品详细信息组件
 </script>
 <style>
+  .mui-card-header span{
+    margin:0 auto;
+    background: #eee;;
+  }
   .app_discount{
     display: flex;
     flex-wrap: wrap;

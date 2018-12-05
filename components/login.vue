@@ -6,21 +6,21 @@
           <img src="../../img/left.png" alt="">
         </router-link>
         <span>登录</span>
-    </div>
+      </div>
 
     <div class="mui-card-content">
       <div class="mui-card-content-inner">
         <form class="mui-input-group">
         <div class="mui-input-row mui-password">
-          <input type="text" class="mui-input" placeholder="请输入Email/手机号登录" v-model="uname">
+          <input type="text" class="mui-input" placeholder="请输入Email/手机号登录">
         </div>
         <div class="mui-input-row mui-password">
-          <input type="password" class="mui-input-password" placeholder="请输入密码" v-model="upwd">
+          <input type="password" class="mui-input-password" placeholder="请输入密码">
         </div>					
           <br>
-          <mt-button type="danger" size=large @click="login">登录</mt-button><br>
+          <mt-button type="danger" size=large>登录</mt-button><br>
           <mt-button type="danger" size=large>注册</mt-button>    
-        </form>
+      </form>
     </div> 
   </div>     
       <div class="mui-card-footer">
@@ -49,42 +49,12 @@
   </div>
 </template>
 <script>
-import {Toast} from "mint-ui"
 export default {
   data () {
-    return {
-      uname:"",
-      upwd:""
-    }
+    return {}
   },
-  methods:{
-    login(){
-      //1.获取参数
-      var u = this.uname;
-      var p = this.upwd;
-      //2.正则表达式验证
-      //3.发送请求
-      // var url = "user/login?uname="+u+"&upwd="+p;
-      // this.$http.get(url).then(result=>{
-      //   var obj = result.body
-      //   if(obj.code == -1){
-      //     Toast(obj.msg)  //登录失败提示
-      //   }else{
-      //     //登录成功跳转Home
-      //     this.$router.push("/Home");
-      //   }
-      // })
-      var url = "http://127.0.0.1:3000/user/login?uname="+u+"&upwd="+p;
-      this.axios.get(url).then(result=>{
-        if(result.data.code == 1){
-          this.$router.push("/Home")
-        }else{
-          Toast("用户名或密码有误")
-        }
-      })
-    }    
-  },
-  created(){}
+  methods:{    
+  }
 }
 </script>
 <style>

@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <!-- 主页组件Home -->
+    <search-box></search-box>
     <!-- 1.轮播图 -->
     <mt-swipe :auto="3000">
       <mt-swipe-item v-for="item of list" :key="item.id">
@@ -9,55 +10,38 @@
     </mt-swipe>
     <!-- 2.主页内容图片 -->
     <div class="menu">
-      <p>
-        <router-link to="home/cate"><img src="../../img/menu1.jpg" />
+      <p v-for="item of centent" :key="item.id">
+        <router-link to="home/cate"><img :src="item.img_url" />
         </router-link>
-      </p>
-      <p>
-        <a href=""><img src="../../img/menu2.jpg" />
-        </a>
-      </p>
-      <p>
-        <a href=""><img src="../../img/menu3.jpg" />
-        </a>
-      </p>
-      <p>
-        <a href=""><img src="../../img/menu4.jpg" />
-        </a>
-      </p>
-      <p>
-        <a href=""><img src="../../img/menu5.jpg" />
-        </a>
-      </p>
-      <p>
-        <a href=""><img src="../../img/menu6.jpg" />
-        </a>
-      </p>
-      <p>
-        <a href=""><img src="../../img/menu7.jpg" />
-        </a>
-      </p>
-      <p>
-        <a href=""><img src="../../img/menu8.jpg" />
-        </a>
-      </p>
-      <p>
-        <a href=""><img src="../../img/menu9.jpg" />
-        </a>
-      </p>    
-      </div>
+      </p>      
+    </div>
   </div>
 </template>
 <script>
+  //引入头部搜索框
+import Search from '../components/Search'
   //加载当前组件需要的模块
   import {Toast} from "mint-ui";
+import SearchVue from './Search.vue';
   export default {
     data () {
       return {
-        list:[]
+        list:[],
+        centent:[]
       }
     },
     methods: {
+      getCentent(){
+        //获取主页图片内容
+        var url = "imagelist/centent";
+        this.$http.get(url).then(result=>{
+          if(result.body.code == 1){
+            this.centent = result.body.msg;
+          }else{
+            Toast("加载内容失败...")
+          }
+        })
+      },
       getImageList(){
         //获取图片轮播的数据
         var url = "imagelist/list";
@@ -72,7 +56,11 @@
     },
     created() {
       this.getImageList();
+      this.getCentent();
     },
+    components:{
+      "search-box":Search
+    }
   }
 </script>
 <style>

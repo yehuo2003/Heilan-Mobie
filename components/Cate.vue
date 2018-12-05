@@ -1,5 +1,11 @@
 <template>
   <div class="app_catelist">
+    <div class="mui-card-header">
+      <router-link to="/home">
+        <img src="../../img/left.png" alt="">
+      </router-link>
+      <span>商品列表</span>
+    </div>
     <!-- 选择标签 -->
     <ul>
       <li><a href="#">综合</a></li>
@@ -39,15 +45,6 @@
         this.$http.get(url).then(result=>{
           this.list = this.list.concat(result.body.msg.data);
         })
-      },
-      getCateList(){
-        // //分页获取商品列表
-        // var url = "catelist/list";
-        // this.$http.get(url).then(result=>{
-        //   if(result.body.code == 1){
-        //     this.list = result.body.msg.data;
-        //   }
-        // })
       }
     },
     created() {
@@ -56,6 +53,9 @@
   }
 </script>
 <style>
+  .app_catelist .mui-card-header span{
+      margin: 0 auto;
+  }
   .app_catelist>ul>li{
     list-style: none;    
   }
