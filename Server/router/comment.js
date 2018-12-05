@@ -10,10 +10,11 @@ router.get("/list",(req,res)=>{
   var nid = parseInt(req.query.nid);
   if(!pno){pno=1}
   if(!pageSize){pageSize=5}
+
   //2.sql-总记录数
   var obj = {pno:pno,pageSize:pageSize};
   var progress = 0;
-  var sql = " SELECT count(id) as c FROM heilan_comment WHERE nid = ?";
+  var sql = " SELECT count(id) AS c FROM heilan_comment WHERE nid = ?";
   pool.query(sql,[nid],(err,result)=>{
     if(err) throw err;
     obj.pageCount = Math.ceil(result[0].c/pageSize);
@@ -40,7 +41,7 @@ router.post("/save",(req,res)=>{
   //1.参数 nid username content
   var obj = req.body;
   var nid = parseInt(obj.nid);  //新闻编号
-  var username = obj.username;  //用户名
+  var uname = req.session.uname;//用户名
   var content = obj.content;    //评论内容
   //内容长度大于2
   if(content.length < 2) {
@@ -49,7 +50,7 @@ router.post("/save",(req,res)=>{
   }
   //2.sql  
   var sql = " INSERT INTO heilan_comment VALUES(null,?,now(),?,?,0)"
-  pool.query(sql,[nid,content,username],(err,result)=>{
+  pool.query(sql,[nid,content,uname],(err,result)=>{
     if(err) throw err;
     //执行成功条件：影响行数
     if(result.affectedRows == 1){

@@ -160,19 +160,20 @@ INSERT INTO heilan_goods_content VALUES
 #用户列表
 CREATE TABLE heilan_user(
 	uid TINYINT PRIMARY KEY AUTO_INCREMENT,	#用户编号
-	uname VARCHAR(16),											#用户姓名
-	upwd  VARCHAR(32),											#用户密码
+	uname VARCHAR(16) NOT NULL DEFAULT '',	#用户姓名
+	upwd  VARCHAR(32) NOT NULL DEFAULT '',	#用户密码
 	phone CHAR(11),													#联系电话
 	gender VARCHAR(3),											#用户性别
 	email VARCHAR(32),											#用户邮箱
 	recipients VARCHAR(32),								  #收件人姓名	
-	user_add VARCHAR(128)										#收件地址
+	user_add VARCHAR(128),									#收件地址
+	isdel BOOL															#是否删除 0正常 1已被删除
 );
 INSERT INTO heilan_user VALUES
-(NULL,'Lin',md5('123456'),13666990716,1,'9208608@qq.com',NULL,'广东省深圳市龙华区汇海广场'),
-(NULL,'dingding',md5('123456'),18750390716,0,'dingding@qq.com',NULL,'北京市朝阳区人民广场'),
-(NULL,'tom',md5('123456'),13753290836,1,'tom@sina.com',NULL,'上海市闵行区浦东路'),
-(NULL,'jerry',md5('123456'),15765392018,0,'jerry@163.com',NULL,'福建省福州市闽侯县');
+(NULL,'Lin',md5('123456'),13666990716,1,'9208608@qq.com',NULL,'广东省深圳市龙华区汇海广场',0),
+(NULL,'dingding',md5('123456'),18750390716,0,'dingding@qq.com',NULL,'北京市朝阳区人民广场',0),
+(NULL,'tom',md5('123456'),13753290836,1,'tom@sina.com',NULL,'上海市闵行区浦东路',0),
+(NULL,'jerry',md5('123456'),15765392018,0,'jerry@163.com',NULL,'福建省福州市闽侯县',0);
 
 #功能一:登录(对数据库查询操作)
 #建议:
@@ -191,6 +192,22 @@ INSERT INTO heilan_imagelist VALUES
 (null,'http://127.0.0.1:3000/img/home/carousel_03.jpg','图片3'),
 (null,'http://127.0.0.1:3000/img/home/carousel_04.jpg','图片4');
 
+#主页图片 heilan_homelist
+CREATE TABLE heilan_homelist(
+  id      INT PRIMARY KEY AUTO_INCREMENT,
+  img_url VARCHAR(255),
+  title   VARCHAR(50)
+);
+INSERT INTO heilan_homelist VALUES
+(null,'http://127.0.0.1:3000/img/home/menu1.jpg','home_img1'),
+(null,'http://127.0.0.1:3000/img/home/menu2.jpg','home_img2'),
+(null,'http://127.0.0.1:3000/img/home/menu3.jpg','home_img3'),
+(null,'http://127.0.0.1:3000/img/home/menu4.jpg','home_img4'),
+(null,'http://127.0.0.1:3000/img/home/menu5.jpg','home_img5'),
+(null,'http://127.0.0.1:3000/img/home/menu6.jpg','home_img6'),
+(null,'http://127.0.0.1:3000/img/home/menu7.jpg','home_img7'),
+(null,'http://127.0.0.1:3000/img/home/menu8.jpg','home_img8'),
+(null,'http://127.0.0.1:3000/img/home/menu9.jpg','home_img9');
 
 #商品列表 
 CREATE TABLE heilan_cate(
@@ -198,35 +215,338 @@ CREATE TABLE heilan_cate(
   title   VARCHAR(255),								#标题
   content VARCHAR(2000),							#内容
   sales   INT,												#销量
+	stock   INT,												#库存
   img_url VARCHAR(255),								#图片路径
   price   DECIMAL(10,2),							#价格
   ctime   DATETIME										#时间
 );
 INSERT INTO heilan_cate VALUES
-(null,'海澜之家2018火热新品男潮流特卖时尚牛津纺水洗休闲衬衫','123',685,'http://127.0.0.1:3000/img/cate/cate1.jpg',98.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚几何纹长袖','123',155,'http://127.0.0.1:3000/img/cate/cate2.jpg',168.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚长袖衬衫','123',542,'http://127.0.0.1:3000/img/cate/cate3.jpg',298.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚条纹衬衫','123',786,'http://127.0.0.1:3000/img/cate/cate4.jpg',298.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚提花长袖','123',254,'http://127.0.0.1:3000/img/cate/cate5.jpg',328.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚清新休闲衬衫','123',138,'http://127.0.0.1:3000/img/cate/cate6.jpg',98.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚保暖衬衫','123',854,'http://127.0.0.1:3000/img/cate/cate7.jpg',328.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚几何纹长袖','123',268,'http://127.0.0.1:3000/img/cate/cate8.jpg',98.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚牛津纺水洗休闲衬衫','123',333,'http://127.0.0.1:3000/img/cate/cate1.jpg',98.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚牛仔保暖衬衫','123',486,'http://127.0.0.1:3000/img/cate/cate2.jpg',328.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚长袖衬衫','123',847,'http://127.0.0.1:3000/img/cate/cate3.jpg',298.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚条纹衬衫','123',568,'http://127.0.0.1:3000/img/cate/cate4.jpg',298.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚提花长袖','123',516,'http://127.0.0.1:3000/img/cate/cate5.jpg',328.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚清新休闲衬衫','123',85,'http://127.0.0.1:3000/img/cate/cate6.jpg',98.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚保暖衬衫','123',169,'http://127.0.0.1:3000/img/cate/cate7.jpg',328.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚几何纹长袖','123',563,'http://127.0.0.1:3000/img/cate/cate8.jpg',98.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚牛津纺水洗休闲衬衫','123',378,'http://127.0.0.1:3000/img/cate/cate1.jpg',98.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚牛仔保暖衬衫','123',865,'http://127.0.0.1:3000/img/cate/cate2.jpg',328.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚长袖衬衫','123',865,'http://127.0.0.1:3000/img/cate/cate3.jpg',298.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚条纹衬衫','123',269,'http://127.0.0.1:3000/img/cate/cate4.jpg',298.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚提花长袖','123',475,'http://127.0.0.1:3000/img/cate/cate5.jpg',328.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚清新休闲衬衫','123',567,'http://127.0.0.1:3000/img/cate/cate6.jpg',98.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚保暖衬衫','123',367,'http://127.0.0.1:3000/img/cate/cate7.jpg',328.00,now()),
-(null,'海澜之家2018火热新品男潮流特卖时尚几何纹长袖','123',485,'http://127.0.0.1:3000/img/cate/cate8.jpg',98.00,now());
+(null,'HLA海澜之家微弹羊毛混纺正装衬衫2018舒适长袖薄款春秋衬衫',
+	'<img src="http://127.0.0.1:3000/img/cate/chenshan1.jpg">  
+	<img src="http://127.0.0.1:3000/img/cate/chenshan2.png">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan3.png">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan4.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan5.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan6.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan7.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan8.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan9.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan10.jpg">',685,37,'http://127.0.0.1:3000/img/cate/cate1.jpg',398.00,now()),
+(null,'HLA海澜之家色织花纹正装衬衫2018秋季新品服帖免烫长袖衬衫',
+	'<img src="http://127.0.0.1:3000/img/cate/chenshan1.jpg">  
+	<img src="http://127.0.0.1:3000/img/cate/chenshan2.png">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan3.png">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan4.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan5.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan6.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan7.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan8.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan9.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/chenshan10.jpg">',685,28,'http://127.0.0.1:3000/img/cate/cate2.jpg',268.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚牛津纺水洗休闲衬衫','<img src="http://127.0.0.1:3000/img/cate/chenshan1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/chenshan2.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan3.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan10.jpg">',685,53,'http://127.0.0.1:3000/img/cate/cate3.jpg',98.00,now()),
+(null,'海澜之家撞色混纺双领针织衫2018舒适时尚假两件春装卫衣','<img src="http://127.0.0.1:3000/img/cate/chenshan1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/chenshan2.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan3.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan10.jpg">',155,63,'http://127.0.0.1:3000/img/cate/cate4.jpg',168.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚长袖衬衫','<img src="http://127.0.0.1:3000/img/cate/chenshan1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/chenshan2.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan3.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan10.jpg">',542,168,'http://127.0.0.1:3000/img/cate/cate5.jpg',298.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚条纹衬衫','<img src="http://127.0.0.1:3000/img/cate/chenshan1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/chenshan2.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan3.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan10.jpg">',786,253,'http://127.0.0.1:3000/img/cate/cate6.jpg',298.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚提花秋装长袖','<img src="http://127.0.0.1:3000/img/cate/chenshan1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/chenshan2.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan3.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan10.jpg">',254,512,'http://127.0.0.1:3000/img/cate/cate7.jpg',328.00,now()),
+(null,'海澜之家撞色混纺双领针织衫2018冬季新品舒适时尚春装卫衣','<img src="http://127.0.0.1:3000/img/cate/chenshan1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/chenshan2.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan3.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan10.jpg">',138,421,'http://127.0.0.1:3000/img/cate/cate8.jpg',98.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚冬季衬衫','<img src="http://127.0.0.1:3000/img/cate/chenshan1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/chenshan2.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan3.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan10.jpg">',854,123,'http://127.0.0.1:3000/img/cate/cate9.jpg',328.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖几何纹冬季长袖','<img src="http://127.0.0.1:3000/img/cate/chenshan1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/chenshan2.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan3.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan10.jpg">',268,642,'http://127.0.0.1:3000/img/cate/cate10.jpg',98.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚牛津纺水洗休闲衬衫','<img src="http://127.0.0.1:3000/img/cate/chenshan1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/chenshan2.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan3.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan10.jpg">',333,551,'http://127.0.0.1:3000/img/cate/cate11.jpg',98.00,now()),
+(null,'海澜之家时尚连帽卫衣2019春季新品个性绣标舒适秋季卫衣','<img src="http://127.0.0.1:3000/img/cate/chenshan1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/chenshan2.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan3.png">
+<img src="http://127.0.0.1:3000/img/cate/chenshan4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/chenshan10.jpg">',486,339,'http://127.0.0.1:3000/img/cate/cate12.jpg',328.00,now()),
+(null,'海澜之家撞色混纺双领针织衫2018冬季新品舒适时尚冬季西装','<img src="http://127.0.0.1:3000/img/cate/dayi1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/dayi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi3.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi4.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi11.png">',847,472,'http://127.0.0.1:3000/img/cate/cate13.jpg',298.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚条纹衬衫','<img src="http://127.0.0.1:3000/img/cate/dayi1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/dayi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi3.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi4.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi11.png">',568,520,'http://127.0.0.1:3000/img/cate/cate14.jpg',298.00,now()),
+(null,'海澜之家时尚连帽卫衣2019春季新品个性绣标舒适春秋羽绒','<img src="http://127.0.0.1:3000/img/cate/dayi1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/dayi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi3.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi4.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi11.png">',516,920,'http://127.0.0.1:3000/img/cate/cate15.jpg',328.00,now()),
+(null,'海澜之家2018火热新品男潮流特卖时尚清新休闲衬衫','<img src="http://127.0.0.1:3000/img/cate/dayi1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/dayi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi3.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi4.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi11.png">',85,864,'http://127.0.0.1:3000/img/cate/cate16.jpg',98.00,now()),
+(null,'海澜之家时尚连帽卫衣2019春季新品个性绣标舒适秋装卫衣','<img src="http://127.0.0.1:3000/img/cate/dayi1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/dayi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi3.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi4.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi11.png">',169,334,'http://127.0.0.1:3000/img/cate/cate17.jpg',328.00,now()),
+(null,'海澜之家2018火热新品男特卖时尚几何纹潮流长袖','<img src="http://127.0.0.1:3000/img/cate/dayi1.jpg">  
+<img src="http://127.0.0.1:3000/img/cate/dayi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi3.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi4.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi11.png">',563,58,'http://127.0.0.1:3000/img/cate/cate18.jpg',98.00,now()),
+(null,'HLA海澜之家舒适宽松牛仔裤2018秋季新品微弹简约有型男裤','<img src="http://127.0.0.1:3000/img/cate/kuzi1.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/kuzi2.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/kuzi3.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/kuzi4.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/kuzi5.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/kuzi6.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/kuzi7.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/kuzi8.png">
+	<img src="http://127.0.0.1:3000/img/cate/kuzi9.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/kuzi10.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/kuzi11.jpg">
+	<img src="http://127.0.0.1:3000/img/cate/kuzi12.jpg"> ',378,67,'http://127.0.0.1:3000/img/cate/cate19.jpg',168.00,now()),
+(null,'HLA海澜之家五袋款牛仔裤2018秋季新品修身磨破时尚长裤','<img src="http://127.0.0.1:3000/img/cate/kuzi1.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi3.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi8.png">
+<img src="http://127.0.0.1:3000/img/cate/kuzi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi11.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi12.jpg">',865,74,'http://127.0.0.1:3000/img/cate/cate20.jpg',298.00,now()),
+(null,'HLA海澜之家时尚商务款牛仔裤2018秋季新品直筒款牛仔长裤','<img src="http://127.0.0.1:3000/img/cate/kuzi1.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi3.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi8.png">
+<img src="http://127.0.0.1:3000/img/cate/kuzi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi11.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi12.jpg">',865,85,'http://127.0.0.1:3000/img/cate/cate21.jpg',298.00,now()),
+(null,'HLA海澜之家时尚猫须款牛仔裤2018秋季新品直筒款牛仔长裤','<img src="http://127.0.0.1:3000/img/cate/kuzi1.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi3.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi8.png">
+<img src="http://127.0.0.1:3000/img/cate/kuzi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi11.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi12.jpg">',269,468,'http://127.0.0.1:3000/img/cate/cate22.jpg',298.00,now()),
+(null,'HLA海澜之家五袋款牛仔裤2018秋季新品修身时尚磨破长裤','<img src="http://127.0.0.1:3000/img/cate/kuzi1.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi3.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi8.png">
+<img src="http://127.0.0.1:3000/img/cate/kuzi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi11.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi12.jpg">',475,6,'http://127.0.0.1:3000/img/cate/cate23.jpg',328.00,now()),
+(null,'HLA海澜之家时尚牛仔裤2018冬季新品长款牛仔裤','<img src="http://127.0.0.1:3000/img/cate/kuzi1.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi3.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi4.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi8.png">
+<img src="http://127.0.0.1:3000/img/cate/kuzi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi11.jpg">
+<img src="http://127.0.0.1:3000/img/cate/kuzi12.jpg">',567,256,'http://127.0.0.1:3000/img/cate/cate24.jpg',298.00,now()),
+(null,'HLA海澜之家轻户外纯色羽绒服2018冬季新品可脱卸帽羽绒外套','<img src="http://127.0.0.1:3000/img/cate/dayi1.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi3.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi4.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi11.png">',567,136,'http://127.0.0.1:3000/img/cate/cate25.jpg',698.00,now()),
+(null,'HLA海澜之家翻领PU皮夹克2018冬季新品加绒皮毛一体保暖外套','<img src="http://127.0.0.1:3000/img/cate/dayi1.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi3.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi4.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi11.png">',567,56,'http://127.0.0.1:3000/img/cate/cate26.jpg',598.00,now()),
+(null,'HLA海澜之家连帽简约款休闲上衣秋季新品舒适套头衫轻薄卫衣','<img src="http://127.0.0.1:3000/img/cate/dayi1.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi3.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi4.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi11.png">',567,78,'http://127.0.0.1:3000/img/cate/cate27.jpg',258.00,now()),
+(null,'HLA海澜之家单排扣长款针织大衣2018冬季新品西装领大衣外套','<img src="http://127.0.0.1:3000/img/cate/dayi1.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi3.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi4.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi11.png">',567,3,'http://127.0.0.1:3000/img/cate/cate28.jpg',898.00,now()),
+(null,'HLA海澜之家经典立领款羽绒服2018冬季新品简约保暖羽绒外套','<img src="http://127.0.0.1:3000/img/cate/dayi1.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi3.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi4.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi11.png">',367,74,'http://127.0.0.1:3000/img/cate/cate29.jpg',898.00,now()),
+(null,'HLA海澜之家撞色混纺双领针织衫2018冬季新品时尚假两件舒适西装','<img src="http://127.0.0.1:3000/img/cate/dayi1.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi2.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi3.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi4.png">
+<img src="http://127.0.0.1:3000/img/cate/dayi5.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi6.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi7.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi8.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi9.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi10.jpg">
+<img src="http://127.0.0.1:3000/img/cate/dayi11.png">',485,268,'http://127.0.0.1:3000/img/cate/cate30.jpg',328.00,now());
 
 #创建评论信息表
 CREATE TABLE heilan_comment(

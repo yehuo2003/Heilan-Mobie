@@ -2,6 +2,7 @@
 const express = require("express");
 const pool = require("../pool");
 const router = express.Router();
+//按页码查询商品
 router.get("/list",(req,res)=>{
   var pno = req.query.pno;  //当前页码
   var pageSize = req.query.pageSize;//页大小
@@ -22,12 +23,17 @@ router.get("/list",(req,res)=>{
     res.send({code:-2,msg:"页大小格式不正确"});
     return;
   }
+  //设置跨域
+  var progress = 0;
+  var obj = {code:1};
+  obj.uname = req.session.uname;
+
   //4.创建两条sql发送 总记录数
   //4.1创建空对象保存返回数据
   var obj = {pno:pno,pageSize:pageSize};
   //4.2创建变量保存(sql语句完成)进度
   var progress = 0;
-  var sql = " SELECT count(id) as c FROM heilan_cate";
+  var sql = " SELECT count(id) AS c FROM heilan_cate";
   pool.query(sql,(err,result)=>{
     if(err)throw err;
     //console.log(result[0].c)
@@ -39,7 +45,7 @@ router.get("/list",(req,res)=>{
     }
   })
   //5.创建第二条sql语句 当前页内容
-  var sql = " SELECT id,title,price,sales,img_url FROM heilan_cate LIMIT ?,?";
+  var sql = " SELECT id,title,price,sales,img_url FROM heilan_cate ORDER BY RAND() LIMIT ?,?";
   var offset = parseInt((pno-1)*pageSize);
   pageSize = parseInt(pageSize);
   pool.query(sql,[offset,pageSize],(err,result)=>{
@@ -58,7 +64,7 @@ router.get("/list",(req,res)=>{
 router.get("/find",(req,res)=>{
   //1.参数 id
   var id = req.query.id;
-  var sql = " SELECT id, title, content, sales, img_url, price, ctime FROM heilan_cate WHERE id = ? ";
+  var sql = " SELECT id,title,content,sales,stock,img_url,price,ctime FROM heilan_cate WHERE id = ? ";
   pool.query(sql,[id],(err,result)=>{
     if(err) throw err;
     res.send({code:1,msg:result})
