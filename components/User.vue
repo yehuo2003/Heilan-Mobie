@@ -1,126 +1,108 @@
 <template>
-  <div class="app_cart">
-    <div class="mui-card">
-      <div class="mui-card-header">
-          <router-link to="/home">
-          <img src="../../img/left.png" alt="">
-        </router-link>
-        <span>登录</span>
+ <div class="app_user">
+  <div class="mui-content">
+		<div class="mui-card-header">
+      <router-link to="/home">
+        <img src="../../img/left.png" alt="">
+      </router-link>
+      <span>个人中心</span>
     </div>
-
     <div class="mui-card-content">
-      <div class="mui-card-content-inner">
-        <form class="mui-input-group">
-        <div class="mui-input-row mui-password">
-          <input type="text" class="mui-input" placeholder="请输入Email/手机号登录" v-model="uname">
+        <div class="mui-card-content-inner">
+          <h3>欢迎回来 {{uname}}</h3>
+          <img src="../../img/face.jpg" alt="">
         </div>
-        <div class="mui-input-row mui-password">
-          <input type="password" class="mui-input-password" placeholder="请输入密码" v-model="upwd">
-        </div>					
-          <br>
-          <mt-button type="danger" size=large @click="login">登录</mt-button><br>
-          <mt-button type="danger" size=large>注册</mt-button>    
-        </form>
-    </div> 
-  </div>     
-      <div class="mui-card-footer">
-         <ul>
-           <li>
-             <a href="javascript:;">
-               <img src="../../img/weibuoimg.jpg" alt="">
-               <p>新浪微博</p>
-             </a>
-           </li>
-           <li>
-             <a href="javascript:;">
-               <img src="../../img/QQimg.jpg" alt="">
-               <p>QQ账号</p>
-             </a>
-           </li>
-           <li>
-             <a href="javascript:;">
-               <img src="../../img/zhihubaologo.jpg" alt="">
-               <p>支付宝账号</p>
-             </a>
-           </li>
-         </ul>
-      </div>
+    </div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" @click="inform">
+						新消息通知
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" @click="infaq">
+						隐私
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" @click="infaq">
+						通用
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 25px;">
+				<li class="mui-table-view-cell">
+					<a id="about" class="mui-navigate-right" @click="infaq">
+						关于我们
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 25px;">
+				<li class="mui-table-view-cell">
+					<a style="text-align: center;color: #FF3B30;" @click="inOff">
+						退出登录
+					</a>
+				</li>
+			</ul>
 		</div>
   </div>
 </template>
 <script>
-import {Toast} from "mint-ui"
+import {Toast} from 'mint-ui'
+ window.history.forward(1);
 export default {
   data () {
     return {
-      uname:"",
-      upwd:""
+      uname:sessionStorage["uname"]
     }
   },
   methods:{
-    login(){
-      //1.获取参数
-      var u = this.uname;
-      var p = this.upwd;
-      //2.正则表达式验证
-      //3.发送请求
-      // var url = "user/login?uname="+u+"&upwd="+p;
-      // this.$http.get(url).then(result=>{
-      //   var obj = result.body
-      //   if(obj.code == -1){
-      //     Toast(obj.msg)  //登录失败提示
-      //   }else{
-      //     //登录成功跳转Home
-      //     this.$router.push("/Home");
-      //   }
-      // })
-      var url = "http://127.0.0.1:3000/user/login?uname="+u+"&upwd="+p;
-      this.axios.get(url).then(result=>{
-        if(result.data.code == 1){
-          this.$router.push("/Home")
-        }else{
-          Toast("用户名或密码有误")
-        }
-      })
-    }    
+    inOff(){
+      //注销用户
+      sessionStorage.clear();
+      //注销成功提示
+      Toast("注销成功")
+      this.$router.push("/login")
+    },
+    infaq(){
+      this.$router.push("/faq")
+    },
+    inform(){
+      Toast("没有任何消息")
+    },
+    isLogin(){
+      var uid = sessionStorage["uid"];
+      if(uid == undefined){
+        Toast("登录后可查看个人中心")
+        this.$router.push("/login")
+      }
+    },    
   },
-  created(){}
+  created(){
+    this.isLogin()
+  }  
 }
 </script>
-<style>
+<style scoped>
   .mui-card-header span{
     margin: 0 auto;
   }
-  .mui-card-footer{
-    border-top:1px dashed #aaa;
-  }
-  .mui-card-footer ul{
-    padding-left: 0px;
-    display: flex;
-  }
-  .mui-card-footer ul li{
-    padding-left:15px ;
-    margin: auto;
-    width: 117px;
-    list-style: none;
-    border-right: 1px solid #aaa;
-  }
-  .mui-card-footer ul li:nth-child(1){
-    padding-left: 20px;
-  }
-  .mui-card-footer ul li:nth-child(1) img{
+  .app_user .mui-card-content .mui-card-content-inner img{
     width: 50px;
+    height: 50px;
+    border-radius: 50%;
   }
-  .mui-card-footer ul li:nth-child(2){
-    padding-left: 30px;
+  .app_user .mui-card-content .mui-card-content-inner{
+    background-image: url("../../img/pg1.jpg");
+    position: relative;
+    display: flex;
+    justify-content: space-evenly
   }
-  .mui-card-footer ul li:nth-child(2) img{
-    margin-left: 10px;
-    width: 30px;
-  }
-  .mui-card-footer ul li:nth-child(3) img{
-    margin-left: 20px;
-    width: 28px;
+  .app_user .mui-card-content .mui-card-content-inner h3{
+    line-height: 37px;
   }
 </style>
+
+
+
 

@@ -1,17 +1,12 @@
-<template>
+<template> 
   <div class="app_catelist">
-    <div class="mui-card-header">
-      <router-link to="/home">
-        <img src="../../img/left.png" alt="">
-      </router-link>
-      <span>商品列表</span>
-    </div>
+    <search-box></search-box>
     <!-- 选择标签 -->
     <ul>
-      <li><a href="#">综合</a></li>
-      <li><a href="#">销量</a></li>
-      <li><a href="#">上新</a></li>
-      <li><a href="#">价格</a></li>
+      <li><a href="#" @click="getMore">综合</a></li>
+      <li><a href="#" @click="getSales">销量</a></li>
+      <li><a href="#" @click="getCtime">上新</a></li>
+      <li><a href="#" @click="getPrice">价格</a></li>
     </ul>
     <!-- 商品列表 -->
     <div class="cateList">
@@ -31,6 +26,8 @@
   </div>
 </template>
 <script>
+  //引入头部搜索框
+import Search from '../components/Search' 
   export default {
     data () {
       return {
@@ -39,16 +36,28 @@
       }
     },
     methods: {
-      getMore(){
-        this.pageIndex++; //页码 加1
-        var url = "catelist/list?pno="+this.pageIndex;
-        this.$http.get(url).then(result=>{
+      getSales(){//销量排序
+       this.getMore(3);
+      },
+      getCtime(){//时间排序
+       this.getMore(2);
+      },
+      getPrice(){//价格排序
+       this.getMore(1);
+      },
+      getMore(sort){    
+          this.pageIndex++; //页码 加1
+          var url = "catelist/list?pno="+this.pageIndex+"&sort="+sort;
+          this.$http.get(url).then(result=>{         
           this.list = this.list.concat(result.body.msg.data);
         })
       }
     },
     created() {
-      this.getMore();
+      this.getMore(1);
+    },
+    components:{
+      "search-box":Search
     }
   }
 </script>

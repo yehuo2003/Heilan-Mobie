@@ -20,7 +20,7 @@
 export default {
   data () {
     return {
-      
+       
     }
   },
   methods:{},
@@ -36,6 +36,7 @@ export default {
     background: #041764; 
   }
   .app_search ul{
+        display: fixed;
     list-style-type: none;
     display: flex;
     justify-content: space-around;  

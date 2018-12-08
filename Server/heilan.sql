@@ -591,3 +591,18 @@ INSERT INTO heilan_comment VALUES
 (null,3,now(),'1111858','tom',0),
 (null,3,now(),'1111929','tom',0),
 (null,3,now(),'1111010','tom',0);
+
+
+#创建购物车表
+CREATE TABLE heilan_cart(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT,	
+	cate_id INT,	
+	count VARCHAR(50),	
+	isdel	INT	
+);
+#插入数据
+INSERT INTO heilan_cart VALUES
+(null,3,15,1,0),
+(null,1,6,3,0),
+(null,2,5,1,0);

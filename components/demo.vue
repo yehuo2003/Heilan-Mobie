@@ -27,8 +27,18 @@ export default {
   data () {
     return {}
   },
-  methods:{    
-  }
+  methods:{
+    isLogin(){
+      var uid = sessionStorage["uid"];
+      if(uid == undefined){
+        this.$router.push("/login")
+      }
+    },    
+  },
+  created(){
+    this.isLogin()
+  }  
+
 }
 </script>
 <style>

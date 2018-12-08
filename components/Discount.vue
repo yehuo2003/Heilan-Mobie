@@ -5,7 +5,7 @@
       <router-link to="/home">
         <img src="../../img/left.png" alt="">
       </router-link>
-      <span>秒杀</span>
+      <span>清仓秒杀</span>
     </div>
   <div class="app_discount">    
     <!-- 秒杀列表 -->
@@ -15,7 +15,7 @@
       <div class="info">
         <p class="price">
           <span class="old">￥{{(item.price*1.5).toFixed(2)}}</span>
-          <span class="now">￥{{item.price}}</span>          
+          <span class="now">￥{{(item.price).toFixed(2)}}</span>          
         </p>
         <p class="sell">
           <span>热卖中</span>
@@ -23,9 +23,6 @@
         </p>
       </div>
     </div>
-
-    <!-- 按钮 -->
-    <mt-button type="primary" size="large">加载更多</mt-button>
   </div>
  </div>
 </template>
@@ -55,7 +52,6 @@
 <style>
   .mui-card-header span{
     margin:0 auto;
-    background: #eee;;
   }
   .app_discount{
     display: flex;

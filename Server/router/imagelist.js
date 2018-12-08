@@ -13,6 +13,7 @@ router.get("/list",(req,res)=>{
         res.send({code:1,msg:result});
     });
 });
+//内容图片
 router.get("/centent",(req,res)=>{
     var sql = "SELECT id,img_url,title FROM heilan_homelist";
     pool.query(sql,(err,result)=>{

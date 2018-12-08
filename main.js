@@ -13,6 +13,32 @@ import 'mint-ui/lib/style.css';
 import './lib/mui/css/mui.css'
 import './lib/mui/css/icons-extra.css'
 Vue.config.productionTip = false
+
+//引入vuex组件
+import Vuex from 'Vuex'
+//注册vuex组件
+Vue.use(Vuex)
+//创建vuex实例对象
+var store = new Vuex.Store({
+  state:{
+    cartCount:0  //购物车中商品的数量
+  },
+  mutations:{   //修改共享数据的方法
+    increment(state,count){ 
+      state.cartCount+= parseInt(count) 
+    },
+    substract(state,count){
+      state.cartCount-= parseInt(count)
+    },
+    clear(state){ state.cartCount = 0 }
+  },
+  getters:{ //获取共享数据的方法
+    optCartCount:function(state){
+      return state.cartCount;
+    }
+  }
+})
+
 //2.注册Header组件
 Vue.component(Header.name,Header);
 Vue.component(Swipe.name,Swipe);
@@ -46,6 +72,7 @@ Vue.http.options.withCredentials = true;
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
