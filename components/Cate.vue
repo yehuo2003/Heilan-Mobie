@@ -1,6 +1,6 @@
 <template> 
   <div class="app_catelist">
-    <search-box></search-box>
+    <search-box @getlist="searchGetdata"></search-box>
     <!-- 选择标签 -->
     <ul>
       <li><a href="#" @click="getMore">综合</a></li>
@@ -10,7 +10,7 @@
     </ul>
     <!-- 商品列表 -->
     <div class="cateList">
-      <div class="cateItem" v-for="item of list" :key="item.id">
+      <div class="cateItem" v-for="(item,index) of list" :key="index">
         <router-link :to="'/goods/'+item.id">
           <img :src="item.img_url">
           <p>
@@ -51,6 +51,9 @@ import Search from '../components/Search'
           this.$http.get(url).then(result=>{         
           this.list = this.list.concat(result.body.msg.data);
         })
+      },
+      searchGetdata (d) {
+        this.list = d
       }
     },
     created() {

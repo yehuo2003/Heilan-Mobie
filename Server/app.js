@@ -4,6 +4,7 @@ const express = require("express");
 const ImageList = require("./router/imagelist")
 const cateList = require("./router/catelist")
 const comment = require("./router/comment")
+const search = require("./router/search")
 const discount = require("./router/discount")
 const cart = require("./router/cart")
 const user = require("./router/user")
@@ -46,6 +47,7 @@ app.use(express.static(__dirname+"/public"))
 app.use("/imagelist",ImageList);
 app.use("/catelist",cateList);
 app.use("/comment",comment);
+app.use("/search",search);
 app.use("/discount",discount);
 app.use("/cart",cart);
 app.use("/user",user);

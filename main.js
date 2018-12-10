@@ -21,7 +21,7 @@ Vue.use(Vuex)
 //创建vuex实例对象
 var store = new Vuex.Store({
   state:{
-    cartCount:0  //购物车中商品的数量
+    cartCount:0,  //购物车中商品的数量
   },
   mutations:{   //修改共享数据的方法
     increment(state,count){ 
@@ -48,8 +48,11 @@ Vue.component(Button.name,Button);
 import axios from "axios"
 //2.2:跨域保存session值
 axios.defaults.withCredentials=true
-//2.3:注册组件
+//2.3 设置axios的post提交方式
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+//2.4:注册组件
 Vue.prototype.axios=axios
+
 
 Vue.config.productionTip = false
 //3.导入 vue-resource 引入到项目中

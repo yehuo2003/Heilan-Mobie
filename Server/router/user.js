@@ -5,12 +5,17 @@ const express = require("express");
 var router = express.Router();
 
 //2:创建路由对象
-router.get("/login",(req,res)=>{
+router.post("/login",(req,res)=>{
     //1.获取参数 uname,upwd
-    var uname = req.query.uname;
-    var upwd = req.query.upwd;
+    var obj = req.body;
+    var uname = obj.uname;
+    var upwd = obj.upwd;
+    console.log(uname,upwd)
     //2.创建正则表达式
     //3.创建sql
+    // console.log(obj)
+    // console.log(uname)
+    // console.log(upwd)
     var sql = " SELECT count(uid) as c,uid,uname FROM heilan_user WHERE uname = ? AND upwd = md5(?)"
     pool.query(sql,[uname,upwd],(err,result)=>{
       if(err) throw err;
@@ -22,16 +27,22 @@ router.get("/login",(req,res)=>{
       }else{
         res.send({code:-1,msg:"用户名或密码错误"})
       }
+      // console.log(result)
     })
   })
 
 //用户注册
-router.get("/reg",(req,res)=>{
-  var obj = req.query
+router.post("/reg",(req,res)=>{
+
+  var obj = req.body;
   var uname = obj.uname;
   var upwd = obj.upwd;
   var phone = obj.phone;
   var email = obj.email;
+  console.log(uname)
+  console.log(upwd)
+  console.log(phone)
+  console.log(email)
   var sql = "INSERT INTO heilan_user VALUES(NULL,?,md5(?),?,NULL,?,NULL,NULL,0)";
   pool.query(sql,[uname,upwd,email,phone],(err,result)=>{
     if(err) throw err;

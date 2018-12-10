@@ -10,7 +10,7 @@
     </div>
     <!--第一部分：商品  -->
 <div id="teLIst">
- <div class="product" v-show="flag===1"> 
+ <div class="product" v-show="flag==1"> 
   <!-- 商品的轮播区域 -->
     <div class="mui-card">
       <div class="mui-card-content">
@@ -57,7 +57,7 @@
     </div>
  </div>  
  <!-- 第二部分：商品的详情区域 -->
- <div class="mui-card" v-show="flag===2">  
+ <div class="mui-card" v-show="flag==2">  
     <div class="mui-card-header">
       商品参数
     </div>
@@ -72,12 +72,10 @@
     <div class="container" v-html="goodinfo.content"></div>  
  </div>
   <!-- 评论区域 -->
- <comment-box :id="this.id" v-show="flag===3"></comment-box>
+ <comment-box :id="this.id" v-show="flag==3"></comment-box>
  </div>    
  </div>
 </template>  
-
-
 
 <script> 
 import {Toast} from 'mint-ui'

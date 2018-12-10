@@ -6,10 +6,10 @@
         <img src="../../img/logo.png" alt="">
       </li>
       <li>
-        <input type="search" placeholder="搜索商品">
+        <input type="search" placeholder="搜索商品" v-model="val">
       </li>
       <li>
-        <a href="#">
+        <a href="#" @click="search">
           <img src="../../img/search.png" alt="">
         </a>
       </li>
@@ -20,10 +20,26 @@
 export default {
   data () {
     return {
-       
+       val:"",
+       pageIndex:0,
+       sort:4 
     }
+  }, 
+  methods:{
+   search(sort){
+     
+     var val = this.val;
+     val = val.replace(/\s+/g,"")
+      this.$router.push("/home/cate")
+      this.pageIndex++; //页码 加1
+      var url = "search/list?pno="+this.pageIndex+"&sort="+this.sort+"&val="+val;
+      this.$http.get(url).then(result=>{         
+      // this.list = this.list.concat(result.body.msg.data);
+      // this.$emit('handleClick',result)
+      this.$emit('getlist',result.body.msg.data)
+    })
+   }
   },
-  methods:{},
   created() {
     
   },

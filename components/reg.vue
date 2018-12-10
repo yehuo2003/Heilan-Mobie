@@ -32,7 +32,7 @@
 						<input type="password" class="mui-input-clear" placeholder="请确保两次密码一致" v-model="cpwd" @mouseout="yzcpwd">
 					</div>		
 					<div class="mui-button-row">            
-						<button type="button" class="mui-btn mui-btn-primary" @click="reg">确认</button>&nbsp;&nbsp;
+						<button type="button" class="mui-btn mui-btn-primary" @click="reg">注册</button>&nbsp;&nbsp;
 						<button type="button" class="mui-btn mui-btn-danger" @click="refresh">返回</button>
 					</div>
 				</form>        
@@ -141,8 +141,9 @@ export default {
         cpwd == upwd
       ){
         //前端验证通过，发送ajax进行后台注册
-      var url = "user/reg?uname="+uname+"&upwd="+upwd+"&email="+email+"&phone="+phone;
-      this.$http.get(url).then(result=>{
+      var url = "user/reg"
+      var obj = {uname:uname,upwd:upwd,email:email,phone:phone};
+      this.$http.post(url,obj).then(result=>{
         if(result.body.code == 1){
           //注册成功提示信息
           Toast(result.body.msg)

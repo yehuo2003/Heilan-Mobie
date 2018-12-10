@@ -50,6 +50,8 @@
 </template>
 <script>
 import {Toast} from "mint-ui"
+import qs from 'qs'
+
 export default {
   data () {
     return {
@@ -59,14 +61,17 @@ export default {
   },
   methods:{
     reg(){
-     
       this.$router.push("/reg")
-
     },
     login(){
       //1.获取参数
       var u = this.uname;
       var p = this.upwd;
+
+      let obj = {
+        uname: u,
+        upwd: p
+      }
       //2.正则表达式验证
       //3.发送请求
       // var url = "user/login?uname="+u+"&upwd="+p;
@@ -79,8 +84,8 @@ export default {
       //     this.$router.push("/Home");
       //   }
       // })
-      var url = "http://127.0.0.1:3000/user/login?uname="+u+"&upwd="+p;
-      this.axios.get(url).then(result=>{
+      var url = "http://127.0.0.1:3000/user/login";
+      this.axios.post(url,qs.stringify(obj)).then(result=>{
         if(result.data.code == 1){
            sessionStorage["uid"]=result.data.uid;
            sessionStorage["uname"]=result.data.uname;
