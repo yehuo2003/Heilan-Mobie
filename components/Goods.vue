@@ -2,7 +2,7 @@
   <div class="app_goods">
     <div class="mui-card-header">
       <router-link to="/home/cate">
-        <img src="../../img/left.png" alt="">
+        <img src="http://127.0.0.1:3000/img/home/left.png" alt="">
       </router-link>
       <span @click="isShow(1)">商品</span>
       <span @click="isShow(2)">详情</span>
@@ -11,7 +11,7 @@
     <!--第一部分：商品  -->
 <div id="teLIst">
  <div class="product" v-show="flag==1"> 
-  <!-- 商品的轮播区域 -->
+  <!-- 商品区域 -->
     <div class="mui-card">
       <div class="mui-card-content">
         <div class="mui-card-content-inner">
@@ -175,6 +175,9 @@ export default {
   }
   .app_goods .mui-card img{
     width: 100%;
+  }
+  #teLIst .mui-card{
+    margin:0;
   }
   .app_goods .product .mui-card .mybutton{
     display: flex;

@@ -3,14 +3,14 @@
   <div class="mui-content">
 		<div class="mui-card-header">
       <router-link to="/home">
-        <img src="../../img/left.png" alt="">
+        <img src="http://127.0.0.1:3000/img/home/left.png" alt="">
       </router-link>
       <span>个人中心</span>
     </div>
     <div class="mui-card-content">
         <div class="mui-card-content-inner">
           <h3>欢迎回来 {{uname}}</h3>
-          <img src="../../img/face.jpg" alt="">
+          <img src="http://127.0.0.1:3000/img/home/face.jpg" alt="">
         </div>
     </div>
 			<ul class="mui-table-view">
@@ -93,7 +93,7 @@ export default {
     border-radius: 50%;
   }
   .app_user .mui-card-content .mui-card-content-inner{
-    background-image: url("../../img/pg1.jpg");
+    background-image: url("http://127.0.0.1:3000/img/home/pg1.jpg");
     position: relative;
     display: flex;
     justify-content: space-evenly

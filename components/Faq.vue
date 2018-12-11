@@ -10,7 +10,7 @@
 				<p>如需商业合作，请与本人联系</p>
 				<p>联系方式</p>
         <p>个人微信：yehuo2003</p>
-        <img src="../../img/wx.jpg" alt="">
+        <img src="http://127.0.0.1:3000/img/home/wx.jpg" alt="">
 			</div>
 		</div>
   </div>

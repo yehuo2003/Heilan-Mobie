@@ -39,7 +39,6 @@ router.get("/list",(req,res)=>{
   var sql = " SELECT count(id) AS c FROM heilan_cate";
   pool.query(sql,(err,result)=>{
     if(err)throw err;
-    //console.log(result[0].c)
     var pageCount = Math.ceil(result[0].c/pageSize);
     obj.pageCount = pageCount;//保存总页数
     progress += 50;           //保存当前进度
@@ -67,7 +66,6 @@ router.get("/list",(req,res)=>{
   pageSize = parseInt(pageSize);
   pool.query(sql,[`%${val}%`,offset,pageSize],(err,result)=>{
     if(err)throw err;
-    console.log(result)
     obj.data = result;     //保存当前页内容
     progress += 50;     //进度加50
     if(progress == 100){//如果二条sql语句全部完成

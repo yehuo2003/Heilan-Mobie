@@ -3,7 +3,7 @@
     <div class="mui-card">
       <div class="mui-card-header">
           <router-link to="/home">
-          <img src="../../img/left.png" alt="">
+          <img src="http://127.0.0.1:3000/img/home/left.png" alt="">
         </router-link>
         <span>登录</span>
     </div>
@@ -27,19 +27,19 @@
          <ul>
            <li>
              <a href="javascript:;">
-               <img src="../../img/weibuoimg.jpg" alt="">
+               <img src="" alt="">
                <p>新浪微博</p>
              </a>
            </li>
            <li>
              <a href="javascript:;">
-               <img src="../../img/QQimg.jpg" alt="">
+               <img src="" alt="">
                <p>QQ账号</p>
              </a>
            </li>
            <li>
              <a href="javascript:;">
-               <img src="../../img/zhihubaologo.jpg" alt="">
+               <img src="" alt="">
                <p>支付宝账号</p>
              </a>
            </li>

@@ -1,9 +1,9 @@
 <template>
- <div>
+ <div class="app_disc">
    <!-- 顶部返回 -->
     <div class="mui-card-header">
       <router-link to="/home">
-        <img src="../../img/left.png" alt="">
+        <img src="http://127.0.0.1:3000/img/home/left.png" alt="">
       </router-link>
       <span>清仓秒杀</span>
     </div>
@@ -20,6 +20,24 @@
         <p class="sell">
           <span>热卖中</span>
           <span>还剩{{item.stock}}件</span>
+        </p>
+      </div>
+    </div>
+    <!--已售出 -->
+      <div class="app_discount-item out">
+        <div class="yishou">
+          <img src="http://127.0.0.1:3000/img/cate/cate.jpg" /> 
+          <img src="http://127.0.0.1:3000/img/cate/yishou.png">
+        </div>              
+      <h1 class="title">HLA海澜之家免烫时尚秋季长袖清仓促销衬衫</h1>
+      <div class="info">
+        <p class="price">
+          <span class="old">￥468.00</span>
+          <span class="now">￥316.00</span>          
+        </p>
+        <p class="sell">
+          <span>已售空</span>
+          <span>还剩 0 件</span>
         </p>
       </div>
     </div>
@@ -97,5 +115,22 @@
     display: flex;
     font-size: 12px;
     justify-content: space-between;
+  }
+  .app_disc .out{
+    opacity: .5;
+  }
+  .app_disc .out .yishou{
+    position: relative;
+    z-index: 0;
+    height: 170;
+  }
+  .app_disc .out img{
+    position: absolute;
+  }
+  .app_disc .out .title{
+    margin-top:165px;
+  }
+  .app_disc .out .price .now{
+    color:#666 !important;
   }
 </style>

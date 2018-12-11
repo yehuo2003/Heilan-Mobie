@@ -1,12 +1,12 @@
 <template> 
   <div class="app_catelist">
-    <search-box @getlist="searchGetdata"></search-box>
+    <search-box @getlists="searchGetdata"></search-box>
     <!-- 选择标签 -->
     <ul>
       <li><a href="#" @click="getMore">综合</a></li>
-      <li><a href="#" @click="getSales">销量</a></li>
-      <li><a href="#" @click="getCtime">上新</a></li>
-      <li><a href="#" @click="getPrice">价格</a></li>
+      <li><a href="#" @click="getList(3)">销量</a></li>
+      <li><a href="#" @click="getList(2)">上新</a></li>
+      <li><a href="#" @click="getList(1)">价格</a></li>
     </ul>
     <!-- 商品列表 -->
     <div class="cateList">
@@ -22,42 +22,59 @@
       </div>     
     </div>
      <!--  加载更多 -->
-  <mt-button type="primary" size=large @click="getMore">加载更多...</mt-button>
+  <mt-button type="primary" size=large @click="getMore()">加载更多...</mt-button>
   </div>
 </template>
 <script>
   //引入头部搜索框
-import Search from '../components/Search' 
+import Search from './Search' 
+import {Toast} from 'mint-ui'
   export default {
     data () {
       return {
         list:[],
-        pageIndex:0   //页码
+        pageIndex:0,   //页码
+        id:0
       }
     },
     methods: {
-      getSales(){//销量排序
-       this.getMore(3);
-      },
-      getCtime(){//时间排序
-       this.getMore(2);
-      },
-      getPrice(){//价格排序
-       this.getMore(1);
-      },
-      getMore(sort){    
+      getMore(sort){  
+        sort=sessionStorage["sort"] 
           this.pageIndex++; //页码 加1
           var url = "catelist/list?pno="+this.pageIndex+"&sort="+sort;
           this.$http.get(url).then(result=>{         
-          this.list = this.list.concat(result.body.msg.data);
+       
+          if(result.body.msg.data.length<=1){
+            Toast("没有更多商品了")
+          }else{
+               this.list = this.list.concat(result.body.msg.data);
+          }
+        })
+      },
+      getList(sort){
+        sessionStorage["sorts"]=sort; 
+  
+        this.list=[];
+        this.pageIndex=1;
+          var url = "catelist/list?pno="+this.pageIndex+"&sort="+sort;
+          this.$http.get(url).then(result=>{         
+          this.list = (result.body.msg.data);
         })
       },
       searchGetdata (d) {
-        this.list = d
+
+        this.list = d;
+   
       }
     },
     created() {
-      this.getMore(1);
+      var sort =parseInt(sessionStorage.sorts);
+      console.log(sort);
+      if(sort==4){
+         this.getList(4);
+      }else{
+       this.getList(5);
+       }
     },
     components:{
       "search-box":Search

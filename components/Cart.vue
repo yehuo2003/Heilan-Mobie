@@ -3,28 +3,10 @@
     <div class="mui-card">
       <div class="mui-card-header">
           <router-link to="/home">
-          <img src="../../img/left.png" alt="">
+          <img src="http://127.0.0.1:3000/img/home/left.png" alt="">
         </router-link>
         <span>购物车</span>
       </div>
-      <!-- <div class="mui-card-content">
-        <div class="mui-card-content-inner" v-for="item of list" :key="item.id">
-          {{item.title}} {{item.price}} -->
-          <!-- 按钮组件 -->
-          <!-- <div class="mui-numbox">
-            <button class="mui-btn mui-btn-numbox-minus" type="button" @click="setSub(item.id)">-</button>
-            <input class="mui-input-numbox" type="number" :value="item.count"/>
-            <button class="mui-btn mui-btn-numbox-plus" type="button" @click="setAdd(item.id)">+</button>
-          </div>
-          <div>
-            <mt-button type="danger" size="small" @click="del">删除{{item.count}}</mt-button>
-          </div> 
-        </div>
-        </div>
-        <div class="mui-card-footer">
-          小计：<span>￥ {{getSubtotal}}</span>
-        </div>
-			</div> -->
       <div class="cart-container" v-for="item of list" :key="item.id">
         <div>
           <img :src="item.img_url" alt="">
@@ -136,7 +118,13 @@ export default {
 <style>
   *{margin: 0;padding: 0;}
   .mui-card-header span{
-    margin: 0 auto;
+    margin: 0 auto;    
+  }
+  .app_cart .mui-card .mui-card-header{
+    background: #EFEFF4;
+  }
+  .app_cart .mui-card{
+    margin:0;
   }
   .cart-container{
     display: flex;

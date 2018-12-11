@@ -3,20 +3,21 @@
     <!-- 商品的输入框 -->
     <ul>
       <li>
-        <img src="../../img/logo.png" alt="">
+        <img src="http://127.0.0.1:3000/img/home/logo.png" alt="">
       </li>
       <li>
         <input type="search" placeholder="搜索商品" v-model="val">
       </li>
       <li>
-        <a href="#" @click="search">
-          <img src="../../img/search.png" alt="">
+        <a href="#" @click.prevent="search">
+          <img src="http://127.0.0.1:3000/img/home/search.png" alt="">
         </a>
       </li>
     </ul>
   </div> 
 </template>
 <script>
+import {Toast} from 'mint-ui'
 export default {
   data () {
     return {
@@ -27,21 +28,27 @@ export default {
   }, 
   methods:{
    search(sort){
-     
+     console.log(this.sort);
+     sessionStorage["sorts"]=this.sort;
+     this.list=[];     
      var val = this.val;
-     val = val.replace(/\s+/g,"")
-      this.$router.push("/home/cate")
-      this.pageIndex++; //页码 加1
+     val = val.replace(/\s+/g,"")      
+      this.pageIndex=1;
       var url = "search/list?pno="+this.pageIndex+"&sort="+this.sort+"&val="+val;
       this.$http.get(url).then(result=>{         
-      // this.list = this.list.concat(result.body.msg.data);
-      // this.$emit('handleClick',result)
-      this.$emit('getlist',result.body.msg.data)
+      // this.$emit.list = result.body.msg.data; 
+      console.log(result.body.msg)
+      this.$router.push("/home/cate")
+      if(result.body.msg.data.length == 1){
+       Toast("没有更多商品了")
+      }else{
+        this.$emit('getlists',result.body.msg.data)
+      }  
     })
    }
   },
   created() {
-    
+   
   },
 }
 </script>

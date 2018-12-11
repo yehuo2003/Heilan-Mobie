@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/list",(req,res)=>{
   var pno = req.query.pno;  //当前页码
   var pageSize = req.query.pageSize;//页大小
-  var sort = req.query.sort
+  var sort = req.query.sort;
   //2.设置参数默认值
   if(!pno){
     pno = 1;
@@ -37,7 +37,6 @@ router.get("/list",(req,res)=>{
   var sql = " SELECT count(id) AS c FROM heilan_cate";
   pool.query(sql,(err,result)=>{
     if(err)throw err;
-    //console.log(result[0].c)
     var pageCount = Math.ceil(result[0].c/pageSize);
     obj.pageCount = pageCount;//保存总页数
     progress += 50;           //保存当前进度
@@ -48,21 +47,20 @@ router.get("/list",(req,res)=>{
   //5.创建第二条sql语句 当前页内容
   if(sort == 1){
     //如果sort等于1，执行价格排序
-    var sql = " SELECT id,title,price,sales,img_url FROM heilan_cate ORDER BY price LIMIT ?,?";
+    var sql = " SELECT id,title,price,sales,img_url FROM heilan_cate ORDER BY price asc LIMIT ?,?";
   }else if(sort == 2){
     //如果sort等于2，按时间排序
-    var sql = " SELECT id,title,price,sales,img_url FROM heilan_cate ORDER BY ctime LIMIT ?,?";
+    var sql = " SELECT id,title,price,sales,img_url FROM heilan_cate ORDER BY ctime desc LIMIT ?,?";
   }else if(sort == 3){
     //如果sort等于3，按销量排序
-    var sql = " SELECT id,title,price,sales,img_url FROM heilan_cate ORDER BY sales LIMIT ?,?";
-  }else{
+    var sql = " SELECT id,title,price,sales,img_url FROM heilan_cate ORDER BY sales desc LIMIT ?,?";
+  }else if(sort==5){
     var sql = " SELECT id,title,price,sales,img_url FROM heilan_cate ORDER BY RAND() LIMIT ?,?";
   }
   var offset = parseInt((pno-1)*pageSize);
   pageSize = parseInt(pageSize);
   pool.query(sql,[offset,pageSize],(err,result)=>{
     if(err)throw err;
-    //console.log(result)
     obj.data = result;     //保存当前页内容
     progress += 50;     //进度加50
     if(progress == 100){//如果二条sql语句全部完成
@@ -72,6 +70,37 @@ router.get("/list",(req,res)=>{
   //6.将数据json发送
 })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 router.get("/desc",(req,res)=>{
   var pno = req.query.pno;  //当前页码
   var pageSize = req.query.pageSize;//页大小
@@ -80,7 +109,6 @@ router.get("/desc",(req,res)=>{
   var sql = " SELECT id,title,price,sales,img_url FROM heilan_cate ORDER BY price LIMIT ?,?";
   pool.query(sql,[offset,pageSize],(err,result)=>{
     if(err)throw err;
-    //console.log(result)
     obj.data = result;     //保存当前页内容
     res.send({code:1,msg:obj})//发送
   })
