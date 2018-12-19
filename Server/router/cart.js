@@ -4,6 +4,17 @@ const pool = require("../pool");
 const express = require("express");
 //2:创建路由对象
 var router = express.Router();
+
+//查询当前用户购物车商品数量
+router.get("/select",(req,res)=>{
+  var user_id = req.query.uid;
+  var sql = "SELECT SUM(count) AS c FROM heilan_cart WHERE user_id = ?"
+  pool.query(sql,user_id,(err,result)=>{
+    if(err) throw err;
+    res.send({code:1,msg:result})
+  })
+})
+
 //添加购物车
 router.get("/add",(req,res)=>{
   //1:获取3个参数
