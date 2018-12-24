@@ -15,16 +15,16 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {path: '/',redirect: "/home"},
-    {path: '/home',component: Home},
-    {path: '/home/discount',component: Discount},  
-    {path: '/home/cate',component: Cate},   
-    {path: '/goods/:id',component: Goods,name:"goodsinfo"}, 
-    {path: '/user',component: User},  
-    {path: '/login',component: Login},  
-    {path: '/reg',component: Reg},  
-    {path: '/cart',component: Cart},  
-    {path: '/faq',component: Faq},  
-    {path: '/search',component: Search}         
-  ],linkActiveClass:"mui-active"
+    { path: '/', redirect: "/home" },
+    { path: '/home', component: Home },
+    { path: '/discount', component: Discount },
+    { path: '/cate', component: Cate },
+    { path: '/goods/:id', component: Goods, name: "goodsinfo" },
+    { path: '/user', component: User },
+    { path: '/login', component: Login },
+    { path: '/reg', component: Reg },
+    { path: '/cart', component: Cart },
+    { path: '/faq', component: Faq },
+    { path: '/search', component: Search }
+  ], linkActiveClass: "mui-active"
 })
