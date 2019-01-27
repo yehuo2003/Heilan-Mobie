@@ -38,10 +38,6 @@ export default {
         this.$router.push("/cate");
       }
     },
-    // rcvMsg(data) {
-    //   this.list = data;
-    //   this.$bus.$emit("senddata", this.list);
-    // },
     getCentent() {
       //获取主页图片内容
       var url = "imagelist/centent";

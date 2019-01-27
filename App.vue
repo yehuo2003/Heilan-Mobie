@@ -6,28 +6,11 @@
     <router-view></router-view>
     <!-- 3.tabbar -->
     <nav class="mui-bar mui-bar-tab">
-      <router-link class="mui-tab-item" to="/home">
-        <span class="mui-icon mui-icon-home"></span>
-        <span class="mui-tab-label">首页</span>
-      </router-link>
-      <router-link class="mui-tab-item" to="/discount">
-        <span class="mui-icon mui-icon-extra mui-icon-extra-outline"></span>
-        <span class="mui-tab-label">秒杀</span>
-      </router-link>
-      <router-link class="mui-tab-item" to="/cate">
-        <span class="mui-icon mui-icon-extra mui-icon-extra-class"></span>
-        <span class="mui-tab-label">列表</span>
-      </router-link>
-      <router-link class="mui-tab-item" to="/cart">
-        <span class="mui-icon mui-icon-extra mui-icon-extra-cart">
-          <!-- <span class="mui-badge" v-show="$store.getters.optCartCount>0">{{$store.getters.optCartCount}}</span> -->
-          <span class="mui-badge" v-show="count>0">{{count}}</span>
+      <router-link class="mui-tab-item" v-for="(item,index) of Tab" :key="index" :to="item.url">
+        <span class="mui-icon" :class="item.cls">
+          <span class="mui-badge" v-show="count>0 && item.title=='购物车'">{{count}}</span>
         </span>
-        <span class="mui-tab-label">购物车</span>
-      </router-link>
-      <router-link class="mui-tab-item" to="/user">
-        <span class="mui-icon mui-icon-contact"></span>
-        <span class="mui-tab-label">我的</span>
+        <span class="mui-tab-label">{{item.title}}</span>
       </router-link>
     </nav>
   </div>
@@ -36,6 +19,25 @@
 export default {
   data() {
     return {
+      Tab: [
+        { title: "首页", cls: "mui-icon-home", url: "/home" },
+        {
+          title: "秒杀",
+          cls: "mui-icon-extra mui-icon-extra-outline",
+          url: "/discount"
+        },
+        {
+          title: "列表",
+          cls: "mui-icon-extra mui-icon-extra-class",
+          url: "/cate"
+        },
+        {
+          title: "购物车",
+          cls: "mui-icon-extra mui-icon-extra-cart",
+          url: "/cart"
+        },
+        { title: "我的", cls: "mui-icon-contact", url: "/user" }
+      ],
       count: 0
     };
   },

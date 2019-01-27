@@ -1,19 +1,24 @@
 <template>
-  <div class="app_search">
-    <!-- 商品的输入框 -->
-    <ul>
-      <li>
-        <img src="http://127.0.0.1:3000/img/home/logo.png">
-      </li>
-      <li>
-        <input type="search" placeholder="搜索商品" v-model="val">
-      </li>
-      <li>
-        <a href="#" @click.prevent="search">
-          <img src="http://127.0.0.1:3000/img/home/search.png">
-        </a>
-      </li>
-    </ul>
+  <div>
+    <div style="height: 50px;"></div>
+    <div class="app_search">
+      <!-- 商品的输入框 -->
+      <ul>
+        <li>
+          <router-link to="/home">
+            <img src="http://127.0.0.1:3000/img/home/logo.png">
+          </router-link>
+        </li>
+        <li>
+          <input type="search" placeholder="搜索商品" v-model="val">
+        </li>
+        <li>
+          <a href="#" @click.prevent="search">
+            <img src="http://127.0.0.1:3000/img/home/search.png">
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
@@ -58,6 +63,9 @@ export default {
 }
 .app_search {
   height: 50px;
+  width: 100%;
+  position: fixed;
+  top: 0;
   background: #041764;
 }
 .app_search ul {

@@ -3,13 +3,13 @@
     <div class="mui-card">
       <div class="mui-card-header">
         <router-link to="/home">
-          <img src="http://127.0.0.1:3000/img/home/left.png" alt>
+          <img src="http://127.0.0.1:3000/img/home/left.png">
         </router-link>
         <span>购物车</span>
       </div>
       <div class="cart-container" v-for="item of list" :key="item.id">
         <div>
-          <img :src="item.img_url" alt>
+          <img :src="item.img_url">
         </div>
         <div class="cart-centent">
           <h6>{{item.title}}</h6>
@@ -25,7 +25,7 @@
           <mt-button
             type="danger"
             size="small"
-            @click="del($event)"
+            @click="del($event,item.count,item.cate_id)"
             :count="item.count"
             :cate_id="item.cate_id"
           >删除</mt-button>
@@ -51,6 +51,8 @@ import { Toast } from "mint-ui";
 export default {
   data() {
     return {
+      count: null,
+      cate_id: null,
       list: [],
       isShow: true
     };
@@ -93,11 +95,9 @@ export default {
         "cart/update?uid=" + uid + "&cate_id=" + cate_id + "&count=" + count;
       this.$http.get(url).then(result => {});
     },
-    del(e) {
+    del(e, count, cate_id) {
       //获取需要的参数
       var uid = sessionStorage["uid"];
-      var cate_id = e.target.getAttribute("cate_id");
-      var count = e.target.getAttribute("count");
       var url =
         "cart/delete?uid=" + uid + "&cate_id=" + cate_id + "&count=" + count;
       this.$http.get(url).then(result => {
@@ -116,8 +116,8 @@ export default {
     getCartList() {
       var uid = sessionStorage["uid"];
       if (uid == undefined) {
-        Toast("您还没有登录呢");
-        this.$router.push("/user");
+        Toast("登录后可查看购物车");
+        this.$router.push("/login");
       } else {
         var url = "cart/list?uid=" + uid;
         this.$http.get(url).then(result => {
@@ -203,7 +203,7 @@ export default {
 .app_cart .card-null {
   padding: 0;
   border: 0;
-  background: #F9F9F9;
+  background: #f9f9f9;
 }
 </style>
 

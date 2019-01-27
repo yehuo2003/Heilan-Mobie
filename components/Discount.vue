@@ -1,9 +1,9 @@
-<template>
+/* <template>
   <div class="app_disc">
     <!-- 顶部返回 -->
     <div class="mui-card-header">
       <router-link to="/home">
-        <img src="http://127.0.0.1:3000/img/home/left.png" alt>
+        <img src="http://127.0.0.1:3000/img/home/left.png">
       </router-link>
       <span>清仓秒杀</span>
     </div>
@@ -99,6 +99,8 @@ export default {
 }
 .app_discount .app_discount-item .title {
   font-size: 14px;
+  line-height: 20px;
+  padding: 0 5px;
 }
 .app_discount .app_discount-item .info {
   background: #eee;
@@ -135,7 +137,7 @@ export default {
 .app_disc .out .title {
   margin-top: 165px;
 }
-.app_disc .out .price .now {
-  color: #666 !important;
+.app_disc .out .info .price .now {
+  color: #666;
 }
 </style>

@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <mt-button type="danger" size="large" @click="getCommentList">加载更多</mt-button>
+    <mt-button type="danger" size="large" :class="{refMore:isMore}" @click="getCommentList">加载更多</mt-button>
   </div>
 </template>
 <script>
@@ -23,6 +23,7 @@ export default {
   data() {
     return {
       list: [],
+      isMore: false,
       msg: "", //双向绑定留言
       pageIndex: 0 //当前显示页码
     };
@@ -30,12 +31,16 @@ export default {
   methods: {
     postComment() {
       //发表评论
-      var username = "匿名用户"; //用户名
-      var nid = this.id; //新闻编号
-      var content = this.msg; //双向绑定留言内容
-
-      var url = "comment/save";
-      var obj = { nid, content, username };
+      let nid = this.id; //新闻编号
+      let content = this.msg; //双向绑定留言内容
+      let url = "comment/save";
+      let username; //用户名
+      if (sessionStorage.uname == undefined) {
+        username = "匿名用户";
+      } else {
+        username = sessionStorage.uname;
+      }
+      let obj = { nid, content, username };
       this.$http.post(url, obj).then(result => {
         if (result.body.code == 1) {
           //1.添加完成清空原有内容
@@ -56,18 +61,22 @@ export default {
     //2.点击加载更多按钮加载下一页
     //3.添加新评论，看第一条内容
     getCommentList() {
+      this.isMore = false;
       this.pageIndex++;
-      var url = "comment/list?nid=" + this.id;
+      let url = "comment/list?nid=" + this.id;
       url += "&pno=" + this.pageIndex;
       this.$http.get(url).then(result => {
-        //console.log(result.body.data)
-        this.list = this.list.concat(result.body.data);
+        if (result.body.data.length <= 1) {
+          Toast("没有更多评论了");
+          this.isMore = true;
+        } else {
+          this.list = this.list.concat(result.body.data);
+        }
       });
     }
   },
   created() {
     this.getCommentList();
-    //console.log(this.id);//在程序直接使用this.id
   },
   props: ["id"] //接收父组件传递参数
 };

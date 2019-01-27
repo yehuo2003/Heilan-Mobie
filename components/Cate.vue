@@ -3,17 +3,8 @@
     <search-box @getlists="searchGetdata"></search-box>
     <!-- 选择标签 -->
     <ul>
-      <li>
-        <a href="#" @click="getList(5)" :class="{active:flag===5}">综合</a>
-      </li>
-      <li>
-        <a href="#" @click="getList(3)" :class="{active:flag===3}">销量</a>
-      </li>
-      <li>
-        <a href="#" @click="getList(2)" :class="{active:flag===2}">上新</a>
-      </li>
-      <li>
-        <a href="#" @click="getList(1)" :class="{active:flag===1}">价格</a>
+      <li v-for="(item,index) of tab" :key="index">
+        <a href="#" @click="getList(item.sort)" :class="{active:flag===item.sort}">{{item.title}}</a>
       </li>
     </ul>
     <!-- 商品列表 -->
@@ -28,7 +19,7 @@
       </div>
     </div>
     <!--  加载更多 -->
-    <mt-button type="primary" size="large" @click="getMore()">加载更多...</mt-button>
+    <mt-button type="primary" size="large" :class="{refMore:isMore}" @click="getMore()">加载更多...</mt-button>
   </div>
 </template>
 <script>
@@ -39,20 +30,29 @@ import { Toast } from "mint-ui";
 export default {
   data() {
     return {
+      id: 0,
       flag: 0,
-      list: [],
       pageIndex: 0, //页码
-      id: 0
+      list: [],
+      isMore: false,
+      tab: [
+        { sort: 5, title: "综合" },
+        { sort: 3, title: "销量" },
+        { sort: 2, title: "上新" },
+        { sort: 1, title: "价格" }
+      ]
     };
   },
   methods: {
     getMore(sort) {
+      this.isMore = false;
       sort = sessionStorage["sort"];
       this.pageIndex++; //页码 加1
       var url = "catelist/list?pno=" + this.pageIndex + "&sort=" + sort;
       this.$http.get(url).then(result => {
         if (result.body.msg.data.length <= 1) {
           Toast("没有更多商品了");
+          this.isMore = true;
         } else {
           this.list = this.list.concat(result.body.msg.data);
         }
@@ -88,10 +88,6 @@ export default {
     }
   },
   created() {
-    // this.$bus.$on("senddata", function(data) {
-    //   that.list = data;
-    // });
-    //this.list = that.list;
     var sort = parseInt(sessionStorage.sort);
     if (sort == 4 && this.list !== undefined) {
       this.search(4);
@@ -155,5 +151,8 @@ export default {
   margin-right: 5px;
   color: #999;
   font-size: 12px;
+}
+.refMore {
+  display: none;
 }
 </style>

@@ -2,12 +2,15 @@
   <!-- 头部导航条 -->
   <div class="app_goods">
     <div class="mui-card-header">
-      <a href="#" @click="next">
-        <img src="http://127.0.0.1:3000/img/home/left.png" alt>
+      <a href="javascript:history.back(-1)">
+        <img src="http://127.0.0.1:3000/img/home/left.png">
       </a>
-      <span @click="isShow(1)" :class="{active:flag===1}">商品</span>
-      <span @click="isShow(2)" :class="{active:flag===2}">详情</span>
-      <span @click="isShow(3)" :class="{active:flag===3}">评论</span>
+      <span
+        v-for="item of tab"
+        :key="item.id"
+        @click="isShow(item.id)"
+        :class="{active:flag===item.id}"
+      >{{item.title}}</span>
     </div>
     <!-- 商品内容区域 -->
     <div id="teLIst">
@@ -18,7 +21,7 @@
           <div class="mui-card-content">
             <div class="mui-card-content-inner">
               <!-- <swipe-box :list="imagelist"></swipe-box>	 -->
-              <img :src="goodinfo.img_url" alt>
+              <img :src="goodinfo.img_url">
             </div>
           </div>
         </div>
@@ -28,7 +31,7 @@
           <div class="mui-card-content">
             <div class="mui-card-content-inner">
               <p class="subtitle">
-                <span>时间：{{goodinfo.ctime | dateFormat}}</span>
+                <span>时间：{{goodinfo.ctime | dateFormat}}&nbsp;&nbsp;</span>
                 <span>月销量：{{goodinfo.sales}} 件</span>
               </p>
               <div class="price">
@@ -86,13 +89,15 @@ export default {
       imagelist: [],
       goodinfo: { title: "" },
       info: {}, //保存商品详细信息
-      num: 1
+      num: 1,
+      tab: [
+        { id: 1, title: "商品" },
+        { id: 2, title: "详情" },
+        { id: 3, title: "评论" }
+      ]
     };
   },
   methods: {
-    next() {
-      this.$router.go(-1);
-    },
     isShow(t) {
       this.flag = t;
     },
@@ -183,10 +188,10 @@ export default {
 #teLIst .mui-card {
   margin: 0;
 }
-.app_goods .now_price{
-    font-weight: bold;
-    font-size: 15px;
-    color: #ff5200;
+.app_goods .now_price {
+  font-weight: bold;
+  font-size: 15px;
+  color: #ff5200;
 }
 .app_goods .product .mui-card .mybutton {
   display: flex;
